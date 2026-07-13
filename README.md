@@ -15,6 +15,17 @@ Each agent lives in its own directory with a standalone `agent.py`, tool definit
 | [sprint-retro-agent](sprint-retro-agent/) | Analyze sprint data and write a retro summary |
 | [competitive-intel-agent](competitive-intel-agent/) | Summarize competitor positioning from pasted content |
 
+## Which agent should I use?
+
+| If you're... | Use |
+|---|---|
+| Starting a new feature? | [prd-writer-agent](prd-writer-agent/) |
+| Prioritizing the backlog? | [roadmap-prioritizer-agent](roadmap-prioritizer-agent/) |
+| Just had a meeting? | [meeting-notes-agent](meeting-notes-agent/) |
+| Ran user interviews? | [user-research-synthesizer-agent](user-research-synthesizer-agent/) |
+| End of sprint? | [sprint-retro-agent](sprint-retro-agent/) |
+| Watching a competitor? | [competitive-intel-agent](competitive-intel-agent/) |
+
 ## Requirements
 
 - Python 3.10+
