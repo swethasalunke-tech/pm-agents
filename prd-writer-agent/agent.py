@@ -12,7 +12,10 @@ import sys
 from pathlib import Path
 
 import anthropic
+from dotenv import load_dotenv
 from tools import TOOLS, handle_tool
+
+load_dotenv()
 
 SYSTEM_PROMPT = """You are a senior product manager writing a Product Requirements Document (PRD).
 
