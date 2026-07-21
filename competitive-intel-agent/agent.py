@@ -87,9 +87,11 @@ def run(content: str, competitor: str) -> str:
             messages.append({"role": "user", "content": tool_results})
             continue
 
-        break
-
-    return ""
+        raise RuntimeError(
+            f"Anthropic API stopped with unexpected stop_reason={response.stop_reason!r} "
+            "and no text was returned. This usually means max_tokens was hit before "
+            "the model finished; try a shorter input or a higher max_tokens."
+        )
 
 
 def main():
