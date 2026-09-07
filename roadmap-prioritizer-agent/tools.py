@@ -45,7 +45,7 @@ def handle_tool(name: str, inputs: dict) -> str:
 
     if name == "record_score":
         _scores.append(inputs)
-        rice = (inputs["reach"] * inputs["impact"] * inputs["confidence"]) / max(inputs["effort"], 0.1)
+        rice = (inputs["reach"] * inputs["impact"] * (inputs["confidence"] / 100)) / max(inputs["effort"], 0.1)
         return f"Recorded. RICE = {rice:.1f}"
 
     return f"Unknown tool: {name}"
