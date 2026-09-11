@@ -105,11 +105,20 @@ def main():
         print("Error: ANTHROPIC_API_KEY is not set", file=sys.stderr)
         sys.exit(1)
 
-    content = Path(args.content).read_text()
+    try:
+        content = Path(args.content).read_text()
+    except OSError as e:
+        print(f"Error: could not read {args.content}: {e}", file=sys.stderr)
+        sys.exit(1)
+
     brief = run(content, args.competitor)
 
     if args.output:
-        Path(args.output).write_text(brief)
+        try:
+            Path(args.output).write_text(brief)
+        except OSError as e:
+            print(f"Error: could not write to {args.output}: {e}", file=sys.stderr)
+            sys.exit(1)
         print(f"Brief written to {args.output}")
     else:
         print(brief)
