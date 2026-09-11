@@ -88,11 +88,20 @@ def main():
         print("Error: ANTHROPIC_API_KEY is not set", file=sys.stderr)
         sys.exit(1)
 
-    notes = Path(args.notes).read_text()
+    try:
+        notes = Path(args.notes).read_text()
+    except OSError as e:
+        print(f"Error: could not read {args.notes}: {e}", file=sys.stderr)
+        sys.exit(1)
+
     synthesis = run(notes)
 
     if args.output:
-        Path(args.output).write_text(synthesis)
+        try:
+            Path(args.output).write_text(synthesis)
+        except OSError as e:
+            print(f"Error: could not write to {args.output}: {e}", file=sys.stderr)
+            sys.exit(1)
         print(f"Synthesis written to {args.output}")
     else:
         print(synthesis)
