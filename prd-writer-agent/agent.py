@@ -86,12 +86,20 @@ def main():
 
     brief = args.brief
     if args.brief_file:
-        brief = Path(args.brief_file).read_text()
+        try:
+            brief = Path(args.brief_file).read_text()
+        except OSError as e:
+            print(f"Error: could not read {args.brief_file}: {e}", file=sys.stderr)
+            sys.exit(1)
 
     prd = run(brief)
 
     if args.output:
-        Path(args.output).write_text(prd)
+        try:
+            Path(args.output).write_text(prd)
+        except OSError as e:
+            print(f"Error: could not write to {args.output}: {e}", file=sys.stderr)
+            sys.exit(1)
         print(f"PRD written to {args.output}")
     else:
         print(prd)
