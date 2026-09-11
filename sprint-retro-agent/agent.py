@@ -101,11 +101,20 @@ def main():
         print("Error: ANTHROPIC_API_KEY is not set", file=sys.stderr)
         sys.exit(1)
 
-    sprint_data = Path(args.sprint).read_text()
+    try:
+        sprint_data = Path(args.sprint).read_text()
+    except OSError as e:
+        print(f"Error: could not read {args.sprint}: {e}", file=sys.stderr)
+        sys.exit(1)
+
     retro = run(sprint_data)
 
     if args.output:
-        Path(args.output).write_text(retro)
+        try:
+            Path(args.output).write_text(retro)
+        except OSError as e:
+            print(f"Error: could not write to {args.output}: {e}", file=sys.stderr)
+            sys.exit(1)
         print(f"Retro written to {args.output}")
     else:
         print(retro)
