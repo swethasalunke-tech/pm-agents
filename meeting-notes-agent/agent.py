@@ -100,11 +100,20 @@ def main():
         print("Error: ANTHROPIC_API_KEY is not set", file=sys.stderr)
         sys.exit(1)
 
-    transcript = Path(args.transcript).read_text()
+    try:
+        transcript = Path(args.transcript).read_text()
+    except OSError as e:
+        print(f"Error: could not read {args.transcript}: {e}", file=sys.stderr)
+        sys.exit(1)
+
     notes = run(transcript)
 
     if args.output:
-        Path(args.output).write_text(notes)
+        try:
+            Path(args.output).write_text(notes)
+        except OSError as e:
+            print(f"Error: could not write to {args.output}: {e}", file=sys.stderr)
+            sys.exit(1)
         print(f"Notes written to {args.output}")
     else:
         print(notes)
