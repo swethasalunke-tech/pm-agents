@@ -86,11 +86,20 @@ def main():
         print("Error: ANTHROPIC_API_KEY is not set", file=sys.stderr)
         sys.exit(1)
 
-    features_text = Path(args.features).read_text()
+    try:
+        features_text = Path(args.features).read_text()
+    except OSError as e:
+        print(f"Error: could not read {args.features}: {e}", file=sys.stderr)
+        sys.exit(1)
+
     result = run(features_text)
 
     if args.output:
-        Path(args.output).write_text(result)
+        try:
+            Path(args.output).write_text(result)
+        except OSError as e:
+            print(f"Error: could not write to {args.output}: {e}", file=sys.stderr)
+            sys.exit(1)
         print(f"Ranked roadmap written to {args.output}")
     else:
         print(result)
